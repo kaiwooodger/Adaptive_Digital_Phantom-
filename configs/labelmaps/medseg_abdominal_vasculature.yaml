@@ -1,0 +1,95 @@
+dataset: medseg_abdominal_vasculature
+source: https://www.medseg.ai/database/vasculature-of-the-abdomen
+format: NIfTI label volume
+case_type: single_branch_rich_abdominal_vascular_segmentation
+labels:
+  1: Inferior vena cava
+  2: Left common iliac artery
+  3: Right common iliac artery
+  4: Aorta
+  5: Coeliac trunk
+  6: Common hepatic artery
+  7: Gastroduodenal artery
+  8: Hepatic artery proper
+  9: Right hepatic artery
+  10: Left hepatic artery
+  11: Left gastric artery
+  12: Right gastric artery
+  13: Splenic artery
+  14: Portal vein
+  15: Right portal vein
+  16: Left portal vein
+  17: Superior mesenteric vein
+  18: Left gonadal vein
+  19: Right gonadal vein
+  20: Inferior mesenteric vein
+  21: Splenic vein
+  22: Short gastric veins
+  23: Jejunal branches of the superior mesenteric vein
+  24: Left renal vein
+  25: Right renal vein
+  26: Superior mesenteric artery
+  27: Right renal artery
+  28: Left renal artery
+  29: Left ascending lumbar vein
+  30: Hemiazygos vein
+  31: Azygos vein
+  32: Separate segment 5/6 vein variant
+  33: Right hepatic vein segment 7 variant
+  34: Middle hepatic vein
+  35: Left hepatic vein
+  36: Ileal branches of the superior mesenteric vein
+  37: Superior posterior pancreaticoduodenal vein
+  38: Right colic vein
+  39: Right gastroepiploic vein
+  40: Middle colic vein
+  41: Inferior mesenteric artery
+  42: Pancreaticoduodenal veins plexus
+  43: Right common iliac vein
+graph_edge_mapping:
+  bifurcation_to_left_common_iliac:
+    labels: [2]
+    replacement_role: left_common_iliac_artery
+  bifurcation_to_right_common_iliac:
+    labels: [3]
+    replacement_role: right_common_iliac_artery
+  renal_origin_to_left_renal:
+    labels: [28]
+    replacement_role: left_renal_artery
+  renal_origin_to_right_renal:
+    labels: [27]
+    replacement_role: right_renal_artery
+  visceral_origin_to_hepatic_placeholder:
+    labels: [5, 6, 8]
+    replacement_role: coeliac_common_hepatic_axis
+  visceral_origin_to_splenic_placeholder:
+    labels: [5, 13]
+    replacement_role: coeliac_splenic_axis
+  ivc_lower_to_bifurcation_return:
+    labels: [43, 1]
+    replacement_role: iliocaval_return
+  ivc_bifurcation_to_renal_junction:
+    labels: [1]
+    replacement_role: inferior_vena_cava_lower
+  ivc_renal_to_hepatic_junction:
+    labels: [1]
+    replacement_role: inferior_vena_cava_mid
+  ivc_hepatic_to_outlet:
+    labels: [1]
+    replacement_role: inferior_vena_cava_upper
+  left_renal_vein_to_ivc:
+    labels: [24]
+    replacement_role: left_renal_vein
+  right_renal_vein_to_ivc:
+    labels: [25]
+    replacement_role: right_renal_vein
+  hepatic_venous_placeholder_to_ivc:
+    labels: [33, 34, 35]
+    replacement_role: hepatic_venous_return
+  splenic_venous_placeholder_to_ivc:
+    labels: [21, 14]
+    replacement_role: splenic_portal_venous_return
+notes:
+  - Single public MedSeg teaching case with 43 abdominal vascular labels.
+  - Labels are used as branch-rich centerline templates, then anchored into the project phantom graph.
+  - This is not a patient-specific registration into CT-ORG unless an explicit registration transform is added later.

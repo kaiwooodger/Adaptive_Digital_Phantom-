@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phantom-digital-twin"
+version = "0.1.0"
+description = "Phase 1 scaffold for a CT, radiotherapy, and vascular-flow anthropomorphic phantom digital twin."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+medical = [
+  "matplotlib>=3.8",
+  "nibabel>=5.2",
+  "pillow>=10.0",
+  "pydicom>=2.4",
+  "pymedphys>=0.41",
+  "scipy>=1.11",
+  "scikit-image>=0.22",
+  "SimpleITK>=2.3",
+  "trimesh>=4.0",
+  "fast-simplification>=0.1.13",
+]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+phantom-twin = "phantom_twin.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

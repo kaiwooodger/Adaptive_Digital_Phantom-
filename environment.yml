@@ -1,0 +1,17 @@
+name: phantom-digital-twin
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pyyaml
+  - scipy
+  - scikit-image
+  - nibabel
+  - pydicom
+  - simpleitk
+  - trimesh
+  - pip
+  - pip:
+      - fast-simplification
+      - pymedphys

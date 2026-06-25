@@ -1,0 +1,65 @@
+dataset: btcv_abdomen
+source: https://www.synapse.org/
+format: NIfTI label volume
+case_type: abdominal_ct_multi_organ_with_major_vessels
+labels:
+  0:
+    name: background
+    material_id: air
+    phase1_role: ignore_or_external_air
+  1:
+    name: spleen
+    material_id: water_equivalent_soft_tissue
+    phase1_role: organ_validation
+  2:
+    name: right kidney
+    material_id: kidney
+    phase1_role: organ_validation
+  3:
+    name: left kidney
+    material_id: kidney
+    phase1_role: organ_validation
+  4:
+    name: gallbladder
+    material_id: water_equivalent_soft_tissue
+    phase1_role: organ_validation
+  5:
+    name: esophagus
+    material_id: water_equivalent_soft_tissue
+    phase1_role: organ_validation
+  6:
+    name: liver
+    material_id: liver
+    phase1_role: organ_validation
+  7:
+    name: stomach
+    material_id: water_equivalent_soft_tissue
+    phase1_role: organ_validation
+  8:
+    name: aorta
+    material_id: blood
+    phase1_role: coarse_vessel_validation
+  9:
+    name: inferior vena cava
+    material_id: blood
+    phase1_role: coarse_vessel_validation
+  10:
+    name: portal vein and splenic vein
+    material_id: blood
+    phase1_role: coarse_vessel_validation_combined_label
+  11:
+    name: pancreas
+    material_id: water_equivalent_soft_tissue
+    phase1_role: organ_validation
+  12:
+    name: right adrenal gland
+    material_id: water_equivalent_soft_tissue
+    phase1_role: organ_validation
+  13:
+    name: left adrenal gland
+    material_id: water_equivalent_soft_tissue
+    phase1_role: organ_validation
+notes:
+  - BTCV Abdomen RawData training labels provide same-grid CT and multi-organ labels.
+  - Major vessel labels are coarse: aorta, inferior vena cava, and a combined portal/splenic vein label.
+  - This dataset is useful for paired organ/major-vessel grounding, but it is not branch-rich CTA/CTV.

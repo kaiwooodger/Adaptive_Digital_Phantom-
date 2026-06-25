@@ -1,0 +1,302 @@
+metadata:
+  purpose: Seed material targets for Phase 1 phantom engineering.
+  status: engineering_starting_values_require_scan_calibration
+  units:
+    hu: Hounsfield units
+    density: g/cm3
+    relative_electron_density: relative_to_water
+  important_note: >
+    These are not final manufacturing recipes. Every candidate material must be
+    CT scanned with the intended protocol and calibrated against the scanner's
+    HU-to-density/electron-density curve.
+
+defaults:
+  initial_hu_tolerance: 50
+  initial_density_tolerance_percent: 5
+  scan_protocol: 120_to_140_kvp_ct_phantom_protocol_to_be_defined
+
+materials:
+  - id: air
+    label: Air cavity
+    category: reference
+    target_hu: [-1000, -950]
+    target_mass_density_g_cm3: 0.0012
+    target_relative_electron_density: 0.001
+    candidate_materials:
+      - sealed_air_gap
+    validation_method: CT ROI in sealed reference cavity.
+
+  - id: lung_inflated
+    label: Inflated lung equivalent
+    category: thorax
+    target_hu: [-850, -650]
+    target_mass_density_g_cm3: 0.20
+    target_relative_electron_density: 0.20
+    candidate_materials:
+      - open_cell_polyurethane_foam
+      - printed_lattice_with_air_fraction
+      - cork_composite
+    validation_method: CT ROI plus bulk mass/volume measurement.
+
+  - id: lung_exhaled
+    label: Exhaled lung equivalent
+    category: thorax
+    target_hu: [-650, -450]
+    target_mass_density_g_cm3: 0.35
+    target_relative_electron_density: 0.35
+    candidate_materials:
+      - denser_foam
+      - variable_infill_printed_lattice
+    validation_method: CT ROI plus bulk mass/volume measurement.
+
+  - id: adipose
+    label: Adipose equivalent
+    category: soft_tissue
+    target_hu: [-140, -60]
+    target_mass_density_g_cm3: 0.92
+    target_relative_electron_density: 0.95
+    candidate_materials:
+      - silicone_oil_gel
+      - polyurethane_mix
+    validation_method: CT ROI and RED calibration curve.
+
+  - id: water_equivalent_soft_tissue
+    label: Water-equivalent soft tissue
+    category: soft_tissue
+    target_hu: [-20, 40]
+    target_mass_density_g_cm3: 1.00
+    target_relative_electron_density: 1.00
+    candidate_materials:
+      - water_equivalent_resin
+      - agar_or_gelatin_based_insert
+      - polyurethane_water_equivalent_mix
+    validation_method: CT ROI, mass/volume, ion-chamber or TPS density check.
+
+  - id: muscle
+    label: Skeletal muscle equivalent
+    category: soft_tissue
+    target_hu: [20, 70]
+    target_mass_density_g_cm3: 1.05
+    target_relative_electron_density: 1.04
+    candidate_materials:
+      - polyurethane_with_filler
+      - silicone_with_density_modifier
+    validation_method: CT ROI and RED calibration curve.
+
+  - id: blood_equivalent_fluid
+    label: Blood-equivalent circulating fluid
+    category: vascular
+    target_hu: [30, 70]
+    target_mass_density_g_cm3: 1.06
+    target_relative_electron_density: 1.05
+    candidate_materials:
+      - water_glycerol_mix
+      - water_saline_glycerol_mix
+      - blood_mimicking_ultrasound_fluid_if_needed
+    validation_method: CT ROI, density, viscosity, and pump-loop flow curve.
+
+  - id: contrast_filled_blood
+    label: CTA contrast-equivalent fluid
+    category: vascular
+    target_hu: [200, 450]
+    target_mass_density_g_cm3: 1.03
+    target_relative_electron_density: 1.05
+    candidate_materials:
+      - diluted_iodinated_contrast_in_water
+      - iodine_equivalent_research_solution
+    validation_method: CT ROI at intended kVp and dilution series.
+
+  - id: liver
+    label: Liver equivalent
+    category: organ
+    target_hu: [45, 75]
+    target_mass_density_g_cm3: 1.06
+    target_relative_electron_density: 1.05
+    candidate_materials:
+      - soft_tissue_equivalent_polyurethane
+      - gelatin_or_silicone_composite
+    validation_method: CT ROI and RED calibration curve.
+
+  - id: heart_muscle
+    label: Myocardium equivalent
+    category: organ
+    target_hu: [35, 80]
+    target_mass_density_g_cm3: 1.05
+    target_relative_electron_density: 1.04
+    candidate_materials:
+      - muscle_equivalent_polyurethane
+      - silicone_composite
+    validation_method: CT ROI and RED calibration curve.
+
+  - id: kidney
+    label: Kidney equivalent
+    category: organ
+    target_hu: [25, 60]
+    target_mass_density_g_cm3: 1.05
+    target_relative_electron_density: 1.04
+    candidate_materials:
+      - soft_tissue_equivalent_polyurethane
+    validation_method: CT ROI and RED calibration curve.
+
+  - id: spleen
+    label: Spleen equivalent
+    category: organ
+    target_hu: [40, 70]
+    target_mass_density_g_cm3: 1.06
+    target_relative_electron_density: 1.05
+    candidate_materials:
+      - soft_tissue_equivalent_polyurethane
+      - gelatin_or_silicone_composite
+    validation_method: CT ROI and RED calibration curve.
+
+  - id: pancreas
+    label: Pancreas equivalent
+    category: organ
+    target_hu: [30, 65]
+    target_mass_density_g_cm3: 1.05
+    target_relative_electron_density: 1.04
+    candidate_materials:
+      - soft_tissue_equivalent_polyurethane
+    validation_method: CT ROI and RED calibration curve.
+
+  - id: stomach_bowel_wall
+    label: Stomach/bowel wall equivalent
+    category: gastrointestinal
+    target_hu: [20, 70]
+    target_mass_density_g_cm3: 1.04
+    target_relative_electron_density: 1.03
+    candidate_materials:
+      - muscle_equivalent_polyurethane
+      - flexible_soft_tissue_equivalent_resin
+    validation_method: CT ROI and wall/lumen geometry QA.
+
+  - id: duodenum_wall
+    label: Duodenum wall equivalent
+    category: gastrointestinal
+    target_hu: [25, 75]
+    target_mass_density_g_cm3: 1.04
+    target_relative_electron_density: 1.03
+    candidate_materials:
+      - muscle_equivalent_polyurethane
+      - flexible_soft_tissue_equivalent_resin
+    validation_method: CT ROI and duodenum wall/lumen geometry QA.
+
+  - id: small_bowel_wall
+    label: Small bowel wall equivalent
+    category: gastrointestinal
+    target_hu: [20, 70]
+    target_mass_density_g_cm3: 1.04
+    target_relative_electron_density: 1.03
+    candidate_materials:
+      - muscle_equivalent_polyurethane
+      - flexible_soft_tissue_equivalent_resin
+    validation_method: CT ROI and small-bowel wall/lumen geometry QA.
+
+  - id: colon_wall
+    label: Colon wall equivalent
+    category: gastrointestinal
+    target_hu: [20, 75]
+    target_mass_density_g_cm3: 1.04
+    target_relative_electron_density: 1.03
+    candidate_materials:
+      - muscle_equivalent_polyurethane
+      - flexible_soft_tissue_equivalent_resin
+    validation_method: CT ROI and colon wall/lumen geometry QA.
+
+  - id: rectum_wall
+    label: Rectum wall equivalent
+    category: gastrointestinal
+    target_hu: [20, 75]
+    target_mass_density_g_cm3: 1.04
+    target_relative_electron_density: 1.03
+    candidate_materials:
+      - muscle_equivalent_polyurethane
+      - flexible_soft_tissue_equivalent_resin
+    validation_method: CT ROI and rectum wall/lumen geometry QA.
+
+  - id: gallbladder_bile_fluid
+    label: Gallbladder/bile fluid equivalent
+    category: gastrointestinal
+    target_hu: [0, 30]
+    target_mass_density_g_cm3: 1.01
+    target_relative_electron_density: 1.0
+    candidate_materials:
+      - water_glycerol_mix
+      - water_equivalent_gel
+    validation_method: CT ROI, density, and lumen volume QA.
+
+  - id: adrenal_soft_tissue
+    label: Adrenal gland soft-tissue equivalent
+    category: organ
+    target_hu: [20, 70]
+    target_mass_density_g_cm3: 1.04
+    target_relative_electron_density: 1.03
+    candidate_materials:
+      - soft_tissue_equivalent_polyurethane
+    validation_method: CT ROI and RED calibration curve.
+
+  - id: gi_lumen_gas
+    label: Gastrointestinal gas lumen
+    category: gastrointestinal
+    target_hu: [-1000, -850]
+    target_mass_density_g_cm3: 0.0012
+    target_relative_electron_density: 0.001
+    candidate_materials:
+      - sealed_air_gap
+    validation_method: CT ROI and lumen connectivity/placement QA.
+
+  - id: gi_lumen_fluid
+    label: Gastrointestinal fluid lumen
+    category: gastrointestinal
+    target_hu: [0, 30]
+    target_mass_density_g_cm3: 1.0
+    target_relative_electron_density: 1.0
+    candidate_materials:
+      - water_equivalent_fluid
+      - water_glycerol_mix
+    validation_method: CT ROI and lumen volume QA.
+
+  - id: trabecular_bone
+    label: Trabecular bone equivalent
+    category: bone
+    target_hu: [150, 450]
+    target_mass_density_g_cm3: 1.20
+    target_relative_electron_density: 1.15
+    candidate_materials:
+      - calcium_carbonate_loaded_resin
+      - gypsiferous_or_epoxy_filler_mix
+    validation_method: CT ROI, density, and heterogeneity check.
+
+  - id: cortical_bone
+    label: Cortical bone equivalent
+    category: bone
+    target_hu: [700, 1400]
+    target_mass_density_g_cm3: 1.85
+    target_relative_electron_density: 1.65
+    candidate_materials:
+      - high_calcium_loaded_resin
+      - ceramic_filled_epoxy
+    validation_method: CT ROI, density, and radiotherapy dose perturbation test.
+
+  - id: vessel_wall
+    label: Vessel wall/silicone equivalent
+    category: vascular
+    target_hu: [50, 150]
+    target_mass_density_g_cm3: 1.10
+    target_relative_electron_density: 1.08
+    candidate_materials:
+      - silicone
+      - flexible_resin
+      - polyurethane_tubing
+    validation_method: CT ROI, wall-thickness measurement, leak/pressure test.
+
+  - id: qa_fiducial_high_z
+    label: High-Z registration fiducial
+    category: qa
+    target_hu: [1500, 3000]
+    target_mass_density_g_cm3: 2.0
+    target_relative_electron_density: 1.8
+    candidate_materials:
+      - ceramic_marker
+      - titanium_or_steel_marker_if_artifacts_are_acceptable
+    validation_method: CT visibility and artifact evaluation.

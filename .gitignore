@@ -1,0 +1,68 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.venv*/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local dependency/runtime caches. Recreate from environment.yml or pyproject.
+.deps/
+.tools/
+node_modules/
+
+# Temporary probes and scratch work.
+.tmp/
+tmp/
+scratch/
+
+# Medical imaging data is large and may have data-use restrictions.
+RawData/**
+data/raw/**
+data/interim/**
+data/processed/**
+data/derived/**
+data/validation/**
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!data/derived/.gitkeep
+!data/validation/.gitkeep
+
+# Generated artifacts.
+outputs/**
+!outputs/
+!outputs/meshes/
+!outputs/reports/
+!outputs/cad/
+!outputs/meshes/.gitkeep
+!outputs/reports/.gitkeep
+!outputs/cad/.gitkeep
+
+# Never commit medical volumes, DICOM, CAD meshes, or release archives by accident.
+*.nii
+*.nii.gz
+*.nrrd
+*.mha
+*.mhd
+*.dcm
+*.stl
+*.ply
+*.obj
+*.step
+*.stp
+*.iges
+*.igs
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# Local Docker / segmentation outputs.
+docker-data/
+totalseg_output/
+*_totalseg/

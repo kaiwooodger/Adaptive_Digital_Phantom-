@@ -1,0 +1,95 @@
+dataset: generic_gi_tract_segmentation
+source: user_supplied_or_tool_generated
+format: NIfTI label volume or directory of binary organ masks
+case_type: co_registered_abdominal_gastrointestinal_segmentation
+description: >
+  Generic GI label mapping for replacing synthetic duodenum, small-bowel,
+  colon, rectum, and stomach placeholders with real co-registered
+  segmentations. Directory mode supports common TotalSegmentator-style
+  filenames such as stomach.nii.gz, duodenum.nii.gz, small_bowel.nii.gz,
+  colon.nii.gz, and rectum.nii.gz. Multilabel mode can use the numeric labels
+  below or any labels whose names match the aliases.
+labels:
+  1:
+    name: stomach
+    target: stomach
+  2:
+    name: duodenum
+    target: duodenum
+  3:
+    name: small_bowel
+    target: small_bowel
+  4:
+    name: colon
+    target: colon
+  5:
+    name: rectum
+    target: rectum
+  55:
+    name: small_bowel
+    target: small_bowel
+    compatibility: common_totalsegmentator_multilabel_export
+  56:
+    name: duodenum
+    target: duodenum
+    compatibility: common_totalsegmentator_multilabel_export
+  57:
+    name: colon
+    target: colon
+    compatibility: common_totalsegmentator_multilabel_export
+targets:
+  stomach:
+    aliases:
+      - stomach
+      - gastric
+    files:
+      - stomach.nii.gz
+      - stomach.nii
+      - stomach_label.nii.gz
+  duodenum:
+    aliases:
+      - duodenum
+      - duodenal
+    files:
+      - duodenum.nii.gz
+      - duodenum.nii
+      - duodenum_label.nii.gz
+  small_bowel:
+    aliases:
+      - small_bowel
+      - small bowel
+      - small_intestine
+      - small intestine
+      - jejunum
+      - ileum
+      - jejunum_ileum
+    files:
+      - small_bowel.nii.gz
+      - small_bowel.nii
+      - small_intestine.nii.gz
+      - small_intestine.nii
+      - jejunum_ileum.nii.gz
+  colon:
+    aliases:
+      - colon
+      - large_bowel
+      - large bowel
+      - large_intestine
+      - large intestine
+    files:
+      - colon.nii.gz
+      - colon.nii
+      - large_bowel.nii.gz
+      - large_intestine.nii.gz
+  rectum:
+    aliases:
+      - rectum
+      - rectal
+    files:
+      - rectum.nii.gz
+      - rectum.nii
+      - rectum_label.nii.gz
+notes:
+  - Segmentations must be co-registered to the primary CT grid before build use.
+  - Solid GI organ masks are split into wall and gas/fluid lumen materials using CT HU and an eroded interior.
+  - Missing structures fall back to synthetic placeholders unless explicitly disabled in code.

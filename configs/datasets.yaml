@@ -1,0 +1,179 @@
+metadata:
+  purpose: Phase 1 source manifest for CT anatomy, RT validation, and vascular geometry.
+  last_reviewed: 2026-05-20
+  selection_rule: Prefer openly accessible data for immediate work, then upgrade to higher-fidelity licensed or controlled-access sources.
+
+selected_for_phase1:
+  anatomy_ct: ct_org
+  vascular_cta: imagetbad
+  whole_body_reference: healthy_total_body_cts
+
+sources:
+  - id: ct_org
+    name: CT-ORG
+    role: immediate_open_ct_anatomy
+    modality:
+      - CT
+      - Segmentation
+    anatomy:
+      - liver
+      - bladder
+      - lungs
+      - kidneys
+      - bone
+      - brain_partial
+    format:
+      - NIfTI
+    subjects: 140
+    size: 16.9 GB
+    license: CC BY 3.0
+    access: TCIA download
+    url: https://www.cancerimagingarchive.net/collection/ct-org/
+    download_mirror_used_for_phase1_case0: https://huggingface.co/datasets/Angelou0516/ct-org
+    doi: 10.7937/tcia.2019.tt7f4v7o
+    citation_required: true
+    phase1_use: >
+      First torso anatomy stream. Use lung, liver, kidney, bladder, and bone
+      masks to prove NIfTI inspection, label-to-mesh export, density mapping,
+      and CT validation reporting.
+    limitations:
+      - Not a healthy-reference dataset; many cases contain lesions/pathology.
+      - Does not include detailed heart, rib substructure, or named vessels.
+      - Some volumes may be abdominal/partial-body rather than full torso.
+
+  - id: healthy_total_body_cts
+    name: Healthy-Total-Body-CTs
+    role: whole_body_reference_upgrade
+    modality:
+      - CT
+      - Segmentation
+      - Demographic
+    anatomy:
+      - whole_body
+      - 37_tissue_segmentations
+      - abdominal_organs
+      - bones
+      - fat
+      - muscle
+    format:
+      - DICOM
+      - NIfTI
+      - XLSX
+    subjects: 30
+    size: 59.03 GB
+    license: CT_images_under_NIH_controlled_data_access_policy_segmentations_CC_BY_4_0
+    access: TCIA Data Retriever and controlled-access workflow for CT images
+    url: https://www.cancerimagingarchive.net/collection/healthy-total-body-cts/
+    doi: 10.7937/NC7Z-4F76
+    citation_required: true
+    phase1_use: >
+      Best candidate for a whole-body reference once access is approved. Use it
+      to replace or augment CT-ORG for healthy full-body proportions and broader
+      tissue labels.
+    limitations:
+      - CT images have controlled-access requirements because faces may be reconstructable.
+      - Segmentations may need reorientation to match DICOM images.
+
+  - id: imagetbad
+    name: ImageTBAD
+    role: vascular_cta_geometry
+    modality:
+      - CTA
+      - Segmentation
+    anatomy:
+      - thoracic_aorta
+      - true_lumen
+      - false_lumen
+      - false_lumen_thrombus
+    format:
+      - image_files_to_confirm
+      - segmentation_files_to_confirm
+    subjects: 100
+    size: 13.38 GB on Kaggle
+    license: Apache 2.0 listed on Kaggle; verify before commercial redistribution
+    access: GitHub metadata plus Kaggle file download API
+    url: https://github.com/XiaoweiXu/Dataset_Type-B-Aortic-Dissection
+    kaggle_url: https://www.kaggle.com/datasets/xiaoweixumedicalai/imagetbad
+    publication_url: https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2021.732711/full
+    doi: 10.3389/fphys.2021.732711
+    citation_required: true
+    phase1_use: >
+      First vascular-flow geometry stream. Use aorta/lumen masks to build a
+      pumpable aorta module and CFD boundary-condition scaffold.
+    limitations:
+      - Pathology-specific type-B aortic dissection geometry, not healthy anatomy.
+      - Kaggle package is a 13.4 GB split archive, so individual-case extraction may require archive-part handling.
+
+  - id: aortic_dissection_figshare
+    name: Type-B Aortic Dissection CTA Collection
+    role: vascular_cta_geometry_alternate
+    modality:
+      - CTA
+      - Segmentation
+    anatomy:
+      - aorta
+      - true_lumen
+      - false_lumen
+    format:
+      - NRRD
+      - STL_conversion_code_available
+    subjects: 40
+    size: 7.28 GB
+    license: to_confirm_before_use
+    access: Figshare
+    url: https://figshare.com/articles/dataset/Aortic_Dissection_Dataset_and_Segmentations/22269091
+    publication_url: https://www.nature.com/articles/s41597-024-03284-2
+    citation_required: true
+    phase1_use: >
+      Backup vascular source with published NRRD-to-STL tooling if ImageTBAD
+      access is inconvenient.
+    limitations:
+      - Also pathology-specific; use for engineering geometry, not normal anatomy.
+
+  - id: xcat
+    name: XCAT Phantom
+    role: synthetic_digital_phantom_reference
+    modality:
+      - computational_phantom
+      - 4D_motion
+    anatomy:
+      - whole_body
+      - cardiac_motion
+      - respiratory_motion
+    format:
+      - licensed_program
+    subjects: synthetic
+    size: license_dependent
+    license: commercial_or_research_license_required
+    access: Duke licensing
+    url: https://cvit.duke.edu/resource/xcat-phantom-program/
+    citation_required: true
+    phase1_use: >
+      High-fidelity digital reference for motion and whole-body anatomy. Treat
+      as an upgrade path after open-data MVP works.
+    limitations:
+      - Not open source.
+      - Licensing controls redistribution and derived use.
+
+  - id: icrp_reference_phantoms
+    name: ICRP Reference Computational Phantoms
+    role: reference_anatomy_and_tissue_properties
+    modality:
+      - computational_phantom
+      - reference_tissue_model
+    anatomy:
+      - whole_body
+      - reference_organs
+    format:
+      - voxel_or_mesh_publication_dependent
+    subjects: reference_male_female
+    size: publication_dependent
+    license: publication_or_license_restricted
+    access: ICRP publications and associated data products
+    url: https://www.icrp.org/
+    citation_required: true
+    phase1_use: >
+      Reference target for organ mass, tissue composition, and dose-related
+      assumptions. Use as benchmark data, not as the first manufacturable model.
+    limitations:
+      - Access and redistribution restrictions must be reviewed.

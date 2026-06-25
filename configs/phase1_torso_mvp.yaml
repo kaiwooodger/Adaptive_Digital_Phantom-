@@ -1,0 +1,133 @@
+project:
+  name: phantom-digital-twin
+  phase: 1
+  build_name: torso_ct_rt_vascular_mvp
+  objective: >
+    Build a modular thorax/upper-abdomen phantom that has a traceable digital
+    twin for CT density realism, radiotherapy dose validation, and pump-driven
+    large-vessel flow testing.
+  clinical_status: research_only_not_for_patient_care
+
+coordinate_system:
+  convention: patient_LPS_when_available
+  primary_volume_format: NIfTI
+  cad_exchange_formats:
+    - STL
+    - OBJ
+    - STEP
+  notes: >
+    Preserve original image affine/orientation metadata. Reorientation for CAD
+    must be explicit and logged so CT, dose, mesh, and flow models can be
+    registered back to the same digital twin.
+
+anatomical_region:
+  initial_region: thorax_upper_abdomen
+  superior_landmark: thoracic_inlet
+  inferior_landmark: lumbar_L3
+  priority_structures:
+    - body_external_shell
+    - lungs
+    - heart_mediastinum
+    - liver
+    - spine
+    - ribs
+    - aorta
+    - vena_cava
+    - pulmonary_vessels
+    - sensor_and_dosimeter_inserts
+
+source_strategy:
+  immediate_ct_anatomy: ct_org
+  whole_body_upgrade_target: healthy_total_body_cts
+  vascular_geometry_stream: imagetbad
+  synthetic_reference_options:
+    - xcat
+    - icrp_reference_phantoms
+
+physical_modules:
+  - id: body_shell
+    purpose: Hold organ modules, alignment keys, scanner positioning, and external contour.
+    manufacturing_route: 3d_printed_shell_or_cast_mold
+    initial_material_target: water_equivalent_soft_tissue
+  - id: lungs
+    purpose: Low-density CT realism and thoracic heterogeneity.
+    manufacturing_route: porous_foam_or_lattice_insert
+    initial_material_target: lung_inflated
+  - id: bone
+    purpose: High-density ribs/spine and radiotherapy heterogeneity.
+    manufacturing_route: printed_or_cast_bone_equivalent_inserts
+    initial_material_target: cortical_bone_and_trabecular_bone
+  - id: liver_soft_organs
+    purpose: Upper-abdomen organ geometry and soft-tissue density targets.
+    manufacturing_route: cast_or_printed_removable_inserts
+    initial_material_target: liver
+  - id: large_vessels
+    purpose: Pump-driven flow loop and contrast/fluid testing.
+    manufacturing_route: silicone_tubing_or_printed_vascular_channels
+    initial_material_target: blood_equivalent_fluid
+  - id: qa_insert_grid
+    purpose: Repeatable dosimetry, density coupons, fiducials, and sensor mounting.
+    manufacturing_route: machined_or_printed_insert_cartridge
+    initial_material_target: mixed_reference_materials
+
+validation_tracks:
+  ct_density:
+    outputs:
+      - hu_roi_report
+      - geometry_registration_error_mm
+      - material_coupon_ct_table
+    initial_acceptance_targets:
+      hu_error_soft_tissue: +/-30 HU
+      hu_error_lung: +/-75 HU
+      hu_error_bone: +/-150 HU
+      mesh_to_scan_surface_error: <=2 mm for MVP
+  radiotherapy:
+    outputs:
+      - relative_electron_density_table
+      - dicom_rt_dose_extraction
+      - gamma_report
+    initial_acceptance_targets:
+      red_error_soft_tissue: <=3 percent after calibration
+      red_error_bone_lung: <=7 percent after calibration
+      gamma_criteria_seed: 3 percent / 3 mm for first comparison
+    planned_tools:
+      - PyMedPhys
+      - pydicom
+      - OpenGATE_or_TOPAS
+  vascular_flow:
+    outputs:
+      - vessel_mesh
+      - inlet_outlet_boundary_conditions
+      - pressure_flow_curve
+      - leak_and_repeatability_report
+    initial_acceptance_targets:
+      steady_flow_repeatability: <=5 percent
+      pressure_sensor_repeatability: <=5 percent
+      no_visible_leaks_at_operating_pressure: true
+    planned_tools:
+      - SimVascular
+      - OpenFOAM_optional
+      - flow_pump_bench
+
+milestones:
+  - id: M0
+    name: scaffold
+    exit_criteria: Configs validate and source choices are documented.
+  - id: M1
+    name: first_reference_case
+    exit_criteria: One CT anatomy case and one vascular case are downloaded and inspected.
+  - id: M2
+    name: first_meshes
+    exit_criteria: Lungs, liver, bone, and aorta meshes export to STL with logged affine/orientation.
+  - id: M3
+    name: material_coupons
+    exit_criteria: Coupon set is manufactured, CT scanned, and HU/RED table is updated.
+  - id: M4
+    name: cad_module_alpha
+    exit_criteria: Torso shell, organ inserts, vascular ports, and QA cartridge exist in CAD.
+  - id: M5
+    name: flow_loop_alpha
+    exit_criteria: Pumped vessel module meets leak, pressure, and repeatability checks.
+  - id: M6
+    name: phantom_scan_alpha
+    exit_criteria: Physical alpha is CT scanned and registered back to the digital twin.

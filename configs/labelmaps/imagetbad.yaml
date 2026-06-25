@@ -1,0 +1,23 @@
+dataset: imagetbad
+source: https://github.com/XiaoweiXu/Dataset_Type-B-Aortic-Dissection
+format: NIfTI label volume
+labels:
+  0:
+    name: background
+    material_id: water_equivalent_soft_tissue
+    phase1_role: ignore
+  1:
+    name: true_lumen
+    material_id: blood_equivalent_fluid
+    phase1_role: flow_channel_candidate
+  2:
+    name: false_lumen
+    material_id: blood_equivalent_fluid
+    phase1_role: optional_pathology_channel_or_geometry_reference
+  3:
+    name: false_lumen_thrombus
+    material_id: muscle
+    phase1_role: optional_solid_insert_or_ignore_for_healthy_aorta
+notes:
+  - Confirmed against ImageTBAD case 125 on 2026-05-20.
+  - For a healthy-flow MVP, true lumen geometry can be simplified into one pumpable aorta channel.

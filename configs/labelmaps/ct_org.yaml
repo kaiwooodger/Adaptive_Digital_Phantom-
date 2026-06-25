@@ -1,0 +1,32 @@
+dataset: ct_org
+source: https://www.cancerimagingarchive.net/collection/ct-org/
+format: NIfTI label volume
+labels:
+  0:
+    name: background
+    material_id: air
+    phase1_role: ignore_or_external_air
+  1:
+    name: liver
+    material_id: liver
+    phase1_role: organ_mesh_and_density_target
+  2:
+    name: bladder
+    material_id: water_equivalent_soft_tissue
+    phase1_role: optional_lower_boundary_reference
+  3:
+    name: lungs
+    material_id: lung_inflated
+    phase1_role: thorax_low_density_insert
+  4:
+    name: kidneys
+    material_id: kidney
+    phase1_role: optional_upper_abdomen_organs
+  5:
+    name: bone
+    material_id: cortical_bone
+    phase1_role: bone_mesh_split_later_into_cortical_trabecular
+  6:
+    name: brain
+    material_id: water_equivalent_soft_tissue
+    phase1_role: out_of_scope_for_torso_mvp

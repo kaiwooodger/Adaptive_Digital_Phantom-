@@ -1,0 +1,8 @@
+dataset: healthy_total_body_cts
+source: https://www.cancerimagingarchive.net/collection/healthy-total-body-cts/
+format: DICOM CT plus NIfTI tissue segmentations
+labels: {}
+notes:
+  - Label values are provided in the collection's segmentation organ-values spreadsheet.
+  - Fill this file after downloading the CC BY 4.0 segmentation package.
+  - CT image access may require the NIH controlled data access workflow.
